@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>Redworth</AssemblyName>
+    <RootNamespace>Redworth</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="IRCHandler">
+      <HintPath>..\..\IRCHandler\IRCHandler\bin\Debug\net5.0\IRCHandler.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
