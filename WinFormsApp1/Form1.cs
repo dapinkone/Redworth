@@ -108,8 +108,8 @@ namespace Redworth
         {
             string targetAddr = "192.168.1.21";//"irc.libera.chat";
             int port = 31338;// 6667;
-            string username = "dapbot/libera";
-            string password = "dapbot";
+            string username = "";
+            string password = "";
             Boolean SSLflag = false;
 
             ircClient = new IRCHandler.IRCHandler(targetAddr, port, username, SSLflag: SSLflag, password: password);
