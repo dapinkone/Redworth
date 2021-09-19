@@ -115,7 +115,7 @@ namespace Redworth
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.treeView1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Redworth";
             this.ResumeLayout(false);
             this.PerformLayout();
 
