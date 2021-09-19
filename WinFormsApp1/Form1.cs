@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -27,21 +29,16 @@ namespace Redworth
             {
                 return; // continue only if the user pressed return to submit the query.
             }
+            Dictionary<string, string> CommandUsageInfo = new();
+            CommandUsageInfo.Add( "connect" , "Usage: /connect server port username [password]");
+
             if (textBox3.Text.ToLower().StartsWith("/"))
             {
-                // handle user-given commands.
-                string[] userInputs = textBox3.Text.Split(" ");
-                string userCommand = userInputs[0][1..].ToLower();
+                // trim the leading / and split remaining data into parsable chunks.
+                string[] userInputs = textBox3.Text[1..].Split(" ");
+                string userCommand = userInputs[0].ToLower();
 
-                if (userCommand.Equals("connect"))
-                {
-                    AppendTextBox("Connecting...");
-                    Task t1 = Task.Factory.StartNew(() => Connect());
-                    AppendTextBox("Connecting......");
-                    textBox3.Text = "";
-                    return;
-                }
-                if (this.ircClient == null)
+                if (this.ircClient == null && !userCommand.Equals("connect"))
                 {
                     // Error! not yet connected to server!
                     AppendTextBox("Error: unable to comply. Not connected to server.");
@@ -52,6 +49,22 @@ namespace Redworth
                 {
                     switch (userCommand)
                     {
+                        case "connect":
+                            if (userInputs.Length < 3)
+                            {
+                                AppendTextBox("Unable to comply. Insufficient arguments.");
+                                AppendTextBox(CommandUsageInfo["connect"]);
+                            }
+                            string server = userInputs[1];
+                            int port = Int32.Parse(userInputs[2]);
+                            string nick = userInputs[3];
+                            string pass = userInputs.Length > 4 ? userInputs[4] : "";
+                            
+                            AppendTextBox("Connecting...");
+                            Task t1 = Task.Factory.StartNew(() => Connect(server, port, nick, pass));
+                            AppendTextBox("Connecting......");
+                            textBox3.Clear();
+                            return;
                         case "quit": // TODO: quit functions, but message is wrong.
                             this.ircClient.Quit(userInputs.Length > 1 ? String.Join(" ", userInputs[1..]) : "");
                             break;
@@ -104,12 +117,12 @@ namespace Redworth
             textBox2.AppendText(value + "\r\n");
         }
 
-        public void Connect()
+        public void Connect(string targetAddr, int port = 6667, string username="redworth", string password="")
         {
-            string targetAddr = "192.168.1.21";//"irc.libera.chat";
-            int port = 31338;// 6667;
-            string username = "";
-            string password = "";
+            //string targetAddr = "irc.libera.chat";
+            //int port = 31338;// 6667;
+            //string username = "";
+            //string password = "";
             Boolean SSLflag = false;
 
             ircClient = new IRCHandler.IRCHandler(targetAddr, port, username, SSLflag: SSLflag, password: password);
