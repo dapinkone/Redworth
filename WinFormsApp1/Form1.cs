@@ -151,17 +151,17 @@ namespace Redworth
             ircClient.AddCallback("part", (user, target, msg) =>
             {
                 // rem channel from the channel list when we join it.
-                if (user.Equals(username) && listBox1.Items.Contains(target))
+                AppendTextBox($"User {user} Parted {target}: {msg}");
+                if (user.Equals(username))
                 {
                     treeView1.BeginInvoke(
                         new Action<string>((s) =>
                         {
-                            foreach (TreeNode node in listBox1.Items)
+                            foreach (TreeNode node in treeView1.Nodes)
                             {
                                 if (node.Text.Equals(target))
                                 {
-                                    listBox1.Items.Remove(node);
-                                    break;
+                                    treeView1.Nodes.Remove(node);
                                 }
                             }
 
