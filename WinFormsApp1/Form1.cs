@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -197,8 +198,12 @@ namespace Redworth
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            // move selected channel to the fore.
-            
+            // User has selected a channel/window from the treeview.
+            // Change visually highlighted selection
+            foreach (TreeNode node in treeView1.Nodes)
+            {
+                node.BackColor = node.IsSelected ? Color.LightBlue : Color.Empty;
+            }
         }
         
     }
