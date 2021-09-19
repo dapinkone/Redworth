@@ -81,11 +81,13 @@ namespace Redworth
                             break;
                         case "me":
                             // TODO: implement.
+                            this.ircClient.Privmsg(userInputs[1], "ACTION "+ String.Join(" ", userInputs[2..]) + "");
                             break;
                         case "msg":
                             this.ircClient.Privmsg(userInputs[1], String.Join(" ", userInputs[2..]));
                             break;
                         case "notice":// TODO: implement.
+                            this.ircClient.Notice(userInputs[1], String.Join(" ", userInputs[2..]));
                             break;
                         case "ctcp":// TODO: implement.
                             break;
@@ -127,7 +129,7 @@ namespace Redworth
             //string password = "";
             Boolean SSLflag = false;
 
-            ircClient = new IRCHandler.IRCHandler(targetAddr, port, username, SSLflag: SSLflag, password: password);
+            ircClient = new IRCHandler.IRCHandler(targetAddr, port, username, username, SSLflag: SSLflag, password: password);
 
             treeView1.BeginInvoke(new Action<string>((s) => { treeView1.Nodes.Add(s); }), new object[] { targetAddr });
 
